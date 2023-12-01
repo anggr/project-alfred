@@ -17,7 +17,7 @@ const TambahPekerjaanPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token"); // Ambil token dari local storage
+    const token = localStorage.getItem("token"); 
 
     if (!userId || !token) {
       alert("User ID or token is not available. Please login.");
@@ -31,7 +31,7 @@ const TambahPekerjaanPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Tambahkan token ke header
+            Authorization: `Bearer ${token}`, 
           },
           body: JSON.stringify(formData),
         }

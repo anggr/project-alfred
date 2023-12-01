@@ -13,7 +13,7 @@ const JobCard: React.FC<{ job: Job }> = ({ job }) => {
   const router = useRouter();
 
   const handleCardClick = () => {
-    router.push(`/job-detail/${job.id}`); // Mengarahkan ke halaman detail pekerjaan
+    router.push(`/job-detail/${job.id}`); 
   };
 
   return (
