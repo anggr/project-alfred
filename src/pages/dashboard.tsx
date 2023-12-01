@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import JobCard from "../components/JobCard"; // Asumsi bahwa JobCard ada di folder components
+import JobCard from "../components/JobCard";
 
 interface Job {
   clientID: string;
   name: string;
   description: string;
   address: string;
-  id: string; 
+  id: string;
 }
 
 const DashboardPage = () => {
@@ -17,7 +17,7 @@ const DashboardPage = () => {
     const fetchJobs = async () => {
       try {
         const response = await fetch(
-          "https://alfred-server.up.railway.app/job"
+          "https://alfred-server.up.railway.app/job/all"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -26,7 +26,6 @@ const DashboardPage = () => {
         setJobs(data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
-   
       }
       setIsLoading(false);
     };
