@@ -1,4 +1,4 @@
-'use client';
+import React from 'react';
 import ApplicationList from '@/components/job-detail/ApplicationList';
 import ClientProfile from '@/components/job-detail/ClientProfile';
 import JobDescription from '@/components/job-detail/JobDescription';
@@ -11,11 +11,9 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 
 const JobDetailPage: React.FC = () => {
-  // Get current job id
   const router = useRouter();
   const { id } = router.query;
 
-  // SWR fetcher function
   const fetcher = (url: string) =>
     axios
       .get(url, {
@@ -24,16 +22,15 @@ const JobDetailPage: React.FC = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
-      .then((data) => {
-        return data.data;
-      })
+      .then((res) => res.data)
       .catch((error) => console.log('Error Fetching Data'));
 
-  // Fetch job by ID
-  const { data, isLoading } = useSWR(
-    `https://alfred-server.up.railway.app/job/${id}`,
+  const { data, error } = useSWR(
+    id ? `https://alfred-server.up.railway.app/job/${id}` : null,
     fetcher,
   );
+
+  const isLoading = !data && !error;
 
   return (
     <div className="w-full flex flex-col items-center justify-center gap-3 font-poppins">
@@ -45,11 +42,13 @@ const JobDetailPage: React.FC = () => {
             <SkeletonClientProfile />
             <SkeletonJobDescription />
           </>
-        ) : (
+        ) : data ? (
           <>
             <ClientProfile clientID={data.clientID} />
             <JobDescription data={data} />
           </>
+        ) : (
+          <p>Error loading data</p>
         )}
       </div>
 
